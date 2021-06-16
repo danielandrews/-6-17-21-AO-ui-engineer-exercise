@@ -205,6 +205,29 @@ const CallActivity = ({ occurred_at, dynamic_data, static_data }) => {
     );
 };
 
+const CadenceActivity = ({ occurred_at, dynamic_data, static_data }) => {
+    return (
+        <>      
+            <ActivityIcon>
+                <ActivityIconBackground color={"#EDEEFA"}>
+                <IconWrapper>
+                    <RocketIcon color={getColor("blue")} />
+                </IconWrapper>
+                </ActivityIconBackground>
+            </ActivityIcon>
+            <ActivityContentWrapper>
+                <div>
+                <ActivityTitle>
+                    Added to Cadence <Button isGhost={true}>{dynamic_data.cadence_name}</Button>
+                </ActivityTitle>
+                <ActivitySubtitle>Added by {static_data.user_name} | Assigned to {dynamic_data.user_name}</ActivitySubtitle>
+                </div>
+                <ActivityDateTime time={occurred_at} />
+            </ActivityContentWrapper>
+        </>
+    );
+};
+
 const Components = {
     voicemail: {
       component: VoicemailActivity,
@@ -227,7 +250,7 @@ const Components = {
         icon: PhoneIcon
     },
     added_to_cadence: {
-        component: 'div',
+        component: CadenceActivity,
         icon: RocketIcon
     }
 };
