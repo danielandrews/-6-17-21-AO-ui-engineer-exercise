@@ -107,6 +107,10 @@ const ActivityContentWrapper = styled.div`
   padding: .75rem 1rem;
 `;
 
+const ActivitySubtext = styled.span`
+  font-weight: normal;
+`;
+
 const VoicemailActivity = ({ occurred_at, dynamic_data }) => {
     const minutes = Math.floor(dynamic_data.voicemail_duration / 60);
     const seconds = dynamic_data.voicemail_duration % 60;
@@ -152,6 +156,34 @@ const SuccessActivity = ({ occurred_at, dynamic_data }) => {
     );
 };
 
+const EmailActivity = ({ occurred_at, dynamic_data, static_data, type }) => {
+    return (
+        <>      
+            <ActivityIcon>
+                <ActivityIconBackground color={"#EDEEFA"}>
+                <IconWrapper>            
+                    {type === 'sent_email' && <PaperPlaneIcon color={"#2a409c"} />}
+                    {type === 'email_reply' && <ReplyIcon color={"#2a409c"} />}
+                </IconWrapper>
+                </ActivityIconBackground>
+            </ActivityIcon>
+            <ActivityContentWrapper>
+                <div className="flex-col center-content">
+                <ActivityTitle>
+                    <Button isGhost={true} style={{ paddingRight: '0.125rem' }}>
+                    {type === 'sent_email' && static_data.subject}
+                    {type === 'email_reply' && `RE: ${static_data.in_reply_to_subject}`}
+                    </Button>
+                    {type === 'email_reply' && <ActivitySubtext>{static_data.body}</ActivitySubtext>}
+                </ActivityTitle>
+                <ActivitySubtitle>{dynamic_data.user_name} | {dynamic_data.counts.views} {dynamic_data.counts.clicks} | {dynamic_data.counts.replies} </ActivitySubtitle>
+                </div>
+                <ActivityDateTime time={occurred_at} />
+            </ActivityContentWrapper>
+        </>
+    );
+};
+
 const Components = {
     voicemail: {
       component: VoicemailActivity,
@@ -162,11 +194,11 @@ const Components = {
         icon: BadgeIcon
     },
     sent_email: {
-        component: 'div',
+        component: EmailActivity,
         icon: PaperPlaneIcon
     },
     email_reply: {
-        component: 'div',
+        component: EmailActivity,
         icon: ReplyIcon
     },
     call: {
