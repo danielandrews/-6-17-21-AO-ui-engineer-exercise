@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+.main-content {
+    height: calc(100vh - 3.5rem);
+    padding-left: .5rem; 
+    padding-top: .5rem;
+}
+.start-section {
+    display: grid;
+    grid-template-rows: .4fr .5fr 0.3fr 1fr;
+    row-gap: .5rem;
+}
+.end-section {
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0.3fr 0.4fr;
+    row-gap: .5rem;
+}
+
+.people-wrapper {
+    display: grid;
+    grid-template-columns: .5fr 1fr .5fr;
+    column-gap: .5rem;
+}
+
+.ml-1 {
+    margin-left: .5rem;
+}
