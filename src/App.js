@@ -7,6 +7,7 @@ import { getColor } from "./_starter/theme/theme";
 import { Panel } from "./components/Panel";
 import { Card } from "./components/Card";
 import { Profile } from "./components/Profile";
+import { Tabs, TabContentWrapper } from "./components/Tab";
 
 
 const PageHead = styled.h1`
@@ -35,14 +36,34 @@ const getPeopleInfo = () => {
     })
 };
 
+const Activities = styled.div``;
+
 export const App = () => {
   const isLoading = useRef(false);
   const [ pageData, setPageData ] = useState({});
+  const [ personTabs, setPersonTabs ] = useState([
+    { label: 'Activity', value: 'activity', Component: null },
+    { label: 'Tracking', value: 'tracking', Component: null },
+    { label: 'Reminders', value: 'reminders', Component: null }
+  ]);
 
   useEffect(() => {
     getPeopleInfo()
       .then(data => {
         setPageData(data);
+        setPersonTabs([
+          { 
+            label: 'Activity', 
+            value: 'activity', 
+            Component: (
+              <TabContentWrapper>
+                <Activities>Hello</Activities>
+              </TabContentWrapper>
+            )
+          },
+          { label: 'Tracking', value: 'tracking', Component:  <TabContentWrapper /> },
+          { label: 'Reminders', value: 'reminders', Component:  <TabContentWrapper /> }
+        ]);
       })
       .finally(() => isLoading.current = false)
   }, []);
@@ -64,7 +85,9 @@ export const App = () => {
           <Panel>&nbsp;</Panel>
         </aside>
         <main>
-          <Panel> this is the main content</Panel>
+          <Panel>
+            <Tabs options={personTabs} id="personTabs" />
+          </Panel>
         </main>
         <aside className="end-section">
           <Panel>&nbsp;</Panel>
@@ -76,7 +99,9 @@ export const App = () => {
     </>
   );
 
-  return (<AppWrapper>
-    { isLoading.current ? <h1>Loading data ...</h1> : page }
-  </AppWrapper>)
+  return (
+    <AppWrapper>
+      { isLoading.current ? <h1>Loading data ...</h1> : page }
+    </AppWrapper>
+  );
 };
