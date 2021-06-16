@@ -1,10 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState  } from "react";
 import styled from "styled-components";
 
 import "./App.css";
 
-import { Panel } from "./components/Panel";
 import { getColor } from "./_starter/theme/theme";
+import { Panel } from "./components/Panel";
+import { Card } from "./components/Card";
+import { Profile } from "./components/Profile";
+
 
 const PageHead = styled.h1`
   font-style: normal;
@@ -34,11 +37,12 @@ const getPeopleInfo = () => {
 
 export const App = () => {
   const isLoading = useRef(false);
+  const [ pageData, setPageData ] = useState({});
 
   useEffect(() => {
     getPeopleInfo()
       .then(data => {
-        console.log(data);
+        setPageData(data);
       })
       .finally(() => isLoading.current = false)
   }, []);
@@ -50,19 +54,23 @@ export const App = () => {
       </Panel>
       <div className="main-content people-wrapper">
         <aside className="start-section">
-          <Panel>dfdf</Panel>
-          <Panel>dfd</Panel>
-          <Panel>dfd</Panel>
-          <Panel>dfdf</Panel>
+          <Panel>
+          <Card>
+            <Profile profile={pageData} />
+          </Card>
+          </Panel>
+          <Panel>&nbsp;</Panel>
+          <Panel>&nbsp;</Panel>
+          <Panel>&nbsp;</Panel>
         </aside>
         <main>
           <Panel> this is the main content</Panel>
         </main>
         <aside className="end-section">
-          <Panel>dfdf</Panel>
-          <Panel>dfdd</Panel>
-          <Panel>dffd</Panel>
-          <Panel>dffx</Panel>
+          <Panel>&nbsp;</Panel>
+          <Panel>&nbsp;</Panel>
+          <Panel>&nbsp;</Panel>
+          <Panel>&nbsp;</Panel>
         </aside>
       </div>
     </>

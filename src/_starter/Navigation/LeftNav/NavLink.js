@@ -27,11 +27,11 @@ const NavLinkContainer = styled.div`
   }
 `;
 
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
   color: ${getColor("white")};
   font-size: 20px;
   line-height: 20px;
-  display: flex;
+  display: ${({ display }) => display || 'flex'};
   align-items: center;
   justify-content: center;
   width: 60px;
