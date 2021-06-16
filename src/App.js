@@ -1,3 +1,5 @@
+
+
 import React, { useRef, useEffect, useState  } from "react";
 import styled from "styled-components";
 
@@ -8,6 +10,7 @@ import { Panel } from "./components/Panel";
 import { Card } from "./components/Card";
 import { Profile } from "./components/Profile";
 import { Tabs, TabContentWrapper } from "./components/Tab";
+import { Activities } from "./components/Activity";
 
 
 const PageHead = styled.h1`
@@ -36,8 +39,6 @@ const getPeopleInfo = () => {
     })
 };
 
-const Activities = styled.div``;
-
 export const App = () => {
   const isLoading = useRef(false);
   const [ pageData, setPageData ] = useState({});
@@ -51,13 +52,17 @@ export const App = () => {
     getPeopleInfo()
       .then(data => {
         setPageData(data);
+        const activityTypes = [ 
+          {...data.upcoming_activities, url: data.upcoming_activities._href, label: 'Upcoming Activities'}, 
+          {...data.activities, url: data.activities._href, label: 'Past Activities'}
+        ];
         setPersonTabs([
           { 
             label: 'Activity', 
             value: 'activity', 
             Component: (
               <TabContentWrapper>
-                <Activities>Hello</Activities>
+                <Activities activityTypes={activityTypes} />
               </TabContentWrapper>
             )
           },
