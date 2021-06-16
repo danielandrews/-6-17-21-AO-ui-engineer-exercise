@@ -131,13 +131,34 @@ const VoicemailActivity = ({ occurred_at, dynamic_data }) => {
     );
 };
 
+const SuccessActivity = ({ occurred_at, dynamic_data }) => {
+    return (
+        <>      
+            <ActivityIcon>
+                <ActivityIconBackground color={"#EDEEFA"}>
+                <IconWrapper>            
+                    <BadgeIcon color={"#2a409c"} />
+                </IconWrapper>
+                </ActivityIconBackground>
+            </ActivityIcon>
+            <ActivityContentWrapper>
+                <div className="flex-col center-content">
+                <ActivityTitle>Marked as Success</ActivityTitle>
+                <ActivitySubtitle>{dynamic_data.user_name}</ActivitySubtitle>
+                </div>
+                <ActivityDateTime time={occurred_at} />
+            </ActivityContentWrapper>
+        </>
+    );
+};
+
 const Components = {
     voicemail: {
       component: VoicemailActivity,
       icon: VoicemailIcon
     },
     success: {
-        component: 'div',
+        component: SuccessActivity,
         icon: BadgeIcon
     },
     sent_email: {
