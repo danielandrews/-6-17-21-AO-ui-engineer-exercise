@@ -184,6 +184,27 @@ const EmailActivity = ({ occurred_at, dynamic_data, static_data, type }) => {
     );
 };
 
+const CallActivity = ({ occurred_at, dynamic_data, static_data }) => {
+    return (
+        <>      
+            <ActivityIcon>
+                <ActivityIconBackground color={getColor("teal")} style={{ opacity: '0.1' }}>
+                <IconWrapper>
+                    <PhoneIcon color={getColor("teal")} />
+                </IconWrapper>
+                </ActivityIconBackground>
+            </ActivityIcon>
+            <ActivityContentWrapper>
+                <div className="flex-col center-content">
+                <ActivityTitle>{static_data.sentiment}</ActivityTitle>
+                <ActivitySubtitle>{dynamic_data.user_name} with {dynamic_data.phone_number}</ActivitySubtitle>
+                </div>
+                <ActivityDateTime time={occurred_at} />
+            </ActivityContentWrapper>
+        </>
+    );
+};
+
 const Components = {
     voicemail: {
       component: VoicemailActivity,
@@ -202,7 +223,7 @@ const Components = {
         icon: ReplyIcon
     },
     call: {
-        component: 'div',
+        component: CallActivity,
         icon: PhoneIcon
     },
     added_to_cadence: {
@@ -287,10 +308,10 @@ const ActivitiesHeader = () => {
 };
   
 export const Activities = ({ activityTypes }) => {
-return (
-    <>
-        <ActivitiesHeader />
-        {activityTypes?.map(activityType => <ActivityType key={activityType.label} {...activityType} />)}
-    </>
-);
+    return (
+        <>
+            <ActivitiesHeader />
+            {activityTypes?.map(activityType => <ActivityType key={activityType.label} {...activityType} />)}
+        </>
+    );
 };
