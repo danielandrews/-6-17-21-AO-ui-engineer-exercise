@@ -111,9 +111,9 @@ const ActivitySubtext = styled.span`
   font-weight: normal;
 `;
 
-const VoicemailActivity = ({ occurred_at, dynamic_data }) => {
+export const VoicemailActivity = ({ occurred_at, dynamic_data }) => {
     const minutes = Math.floor(dynamic_data.voicemail_duration / 60);
-    const seconds = dynamic_data.voicemail_duration % 60;
+    const seconds = (dynamic_data.voicemail_duration % 60).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
     const voicemailMinutes = `${minutes}:${seconds}`;
     return (
       <>      
