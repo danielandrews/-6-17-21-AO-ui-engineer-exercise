@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import "./App.css";
 
-import { getColor } from "./_starter/theme/theme";
+import { getColor, getBreakpoint } from "./_starter/theme/theme";
 import { Panel } from "./components/Panel";
 import { Card } from "./components/Card";
 import { Profile } from "./components/Profile";
@@ -38,6 +38,43 @@ const getPeopleInfo = () => {
       else throw response;
     })
 };
+
+const PeopleWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: .5rem;
+  main {
+    order: -1; //prioritize main content on mobile
+  }
+
+  aside {
+    margin-top: 1rem;
+  }
+
+  @media (min-width: ${getBreakpoint("sm")}) {
+    grid-template-columns: .75fr .25fr;
+
+    .end-section {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+
+    aside {
+      margin-top: initial;
+    }
+  }
+
+  @media (min-width: ${getBreakpoint("md")}) {
+    grid-template-columns: .5fr 1fr .5fr;
+    main {
+      order: 0; // back to normal content flow
+    }
+    .end-section {
+      grid-column-start: initial;
+      grid-column-end: initial;
+    }
+  }
+`;
 
 export const App = () => {
   const isLoading = useRef(false);
@@ -78,7 +115,7 @@ export const App = () => {
       <Panel>
         <PageHead>People</PageHead>
       </Panel>
-      <div className="main-content people-wrapper">
+      <PeopleWrapper className="main-content">
         <aside className="start-section">
           <Panel>
           <Card>
@@ -100,7 +137,7 @@ export const App = () => {
           <Panel>&nbsp;</Panel>
           <Panel>&nbsp;</Panel>
         </aside>
-      </div>
+      </PeopleWrapper>
     </>
   );
 
